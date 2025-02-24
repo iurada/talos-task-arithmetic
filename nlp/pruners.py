@@ -185,8 +185,8 @@ class TaLoS(Pruner):
         model.eval()
 
         for m, p in masked_parameters(model):
-            m.requires_grad = False
-            p.requires_grad = True
+            m.requires_grad = True
+            p.requires_grad = False
             self.scores[id(p)] = torch.zeros_like(p).cpu()
 
         prune_iterator = batcher.get_evalBatches("validation", template_idx=0)
@@ -206,12 +206,12 @@ class TaLoS(Pruner):
                     model.zero_grad()
                     torch.autograd.backward(samples[idx], retain_graph=True)
                     for m, p in masked_parameters(model):
-                        if p.requires_grad and hasattr(p, 'grad') and p.grad is not None:
-                            self.scores[id(p)] += torch.clone(p.grad.data.pow(2) * (m!=0).float()).detach().cpu()
+                        if m.requires_grad and hasattr(m, 'grad') and m.grad is not None:
+                            self.scores[id(p)] += torch.clone(m.grad.data.pow(2) * (m!=0).float()).detach().cpu()
 
         for m, p in masked_parameters(model):
-            if p.requires_grad and hasattr(p, 'grad') and p.grad is not None:
-                p.grad.data.zero_()
+            if m.requires_grad and hasattr(m, 'grad') and m.grad is not None:
+                m.grad.data.zero_()
             m.requires_grad = False
             p.requires_grad = True
 
