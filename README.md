@@ -24,3 +24,13 @@ Please refer to the `args.py` file in both `vision/` and `nlp/` folders for the 
 
 ## Acknowledgement
 Our code is developed starting from the one provided by the authors of ["Editing Models with Task Arithmetic"](https://arxiv.org/abs/2212.04089). Their original code repository can be found at: https://github.com/mlfoundations/task_vectors
+
+# Citation
+```
+@inproceedings{iurada2025editing,
+  author={Iurada, Leonardo and Ciccone, Marco and Tommasi, Tatiana},
+  booktitle={ICLR}, 
+  title={Efficient Model Editing with Task-Localized Sparse Fine-tuning}, 
+  year={2025}
+}
+```
